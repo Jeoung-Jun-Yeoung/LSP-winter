@@ -59,6 +59,11 @@ vim으로 C 파일을 만들어 helloword 출력해보기.
 본격적으로 영어단어장에 대한 프로그래밍 시작 및 설계
 
 
+***
+***
+***
+***
+
 
 
 
@@ -111,7 +116,7 @@ vim으로 C 파일을 만들어 helloword 출력해보기.
 
 	  printf("출력방식(알파벳 순서대로 :1, 무작위 :2)\n");
 	  scanf("%d", &file_num);
-    printf("%d\n",play_mode);
+          printf("%d\n",play_mode);
 
 
 	switch(play_num){
