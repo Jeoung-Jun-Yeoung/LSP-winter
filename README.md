@@ -105,7 +105,7 @@ vim으로 C 파일을 만들어 helloword 출력해보기.
 	  printf("\n");
 	  printf("5. 프로그램 종료\n");
   
-    printf("번호를 선택하세요 : ");
+          printf("번호를 선택하세요 : ");
 	  scanf ("%d", &play_num);
 	  printf("%d\n",play_num);
 
@@ -125,7 +125,7 @@ vim으로 C 파일을 만들어 helloword 출력해보기.
 			
 		First_Function();
 
-    case 2 :
+                case 2 :
 
 		Second_Function();
 
