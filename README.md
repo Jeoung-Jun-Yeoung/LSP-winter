@@ -207,5 +207,9 @@ filegets, fileopen의 학습이 필요함.
 
 화면 기본설계 그러나, 문제점이 많아서 오늘 중점적으로 화면 기본을 다시 설계함.
 
+### 오늘 작업한 내용
+![img1]https://user-images.githubusercontent.com/59688981/105626500-58dc1380-5e73-11eb-8a84-87623559406e.JPG
+
+
 
 
