@@ -306,8 +306,8 @@ https://dojang.io/mod/page/view.php?id=610
 
 ```
 typedef struct Node {
-	char eng;
-	char kor[500];
+	char eng[20];
+	char kor[16];
 	struct Node* next 
 } Node;
 
@@ -366,9 +366,11 @@ int count;
 FILE *fp = fopen("1.dic","r");
 
 fseek(fp,0,SEEK_END);
+
 size = ftell(fp);
 
 buffer = malloc(size + 1);
+
 memset(buffer, 0 ,size + 1);
 
 fseek(fp,0,SEEK_SET);
