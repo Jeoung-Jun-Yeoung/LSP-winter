@@ -451,5 +451,82 @@ __fget에서 맨뒤 개행이 들어가니 마지막 부분을 null로 처리해
 터미널 확대 컨트롤과 shift누른상태로 + 
 
 
+### 진행내용
+
+연결리스트로 노드를 만들어야함. 동적할당으로 만들건데, 파일을 읽어서 단어갯수를 확인. 그 갯수만큼 노드를 만들면 될것이라 생각.
+어떻게 구할지 고민하고 생각하는데 시간이 조금 오래걸린거 같음. 그러다가 라인갯수를 세면 단어갯수를 셀수있다고 생각함. 어차피 뜻은 공백으로 구분되니까.
+
+그래서 int voca 함수를 추가함. 사용자로부터 입력받은 파일명을 확인하고, 그 파일을 열어서 하나씩 읽으면서 라인 갯수를 세면 되겠다고 생각해서 code를 짜봄. 
+
+그런데 여기서 fgetc함수를 사용하려고 보니, 파일마다 다른 조건문을 걸어줘야했음. ex) 1.dic일때 2.dic일때 각각을 구해서 return해줘야 했는데 반복문이 반복되니까 코드의 가독성이 떨어짐. >> 파일들을 list로 만들어서 가지고 있어야하나? 하는 고민이듬.
+
+code는 아래와 같이 작성해봄. 아직 디버깅은 못함.
+
+
+```
+int voca(int dic_num) {
+
+int count = 0;
+int line = 0;
+
+FILE *fp;
+
+if(dic_num == 1){
+
+fp = fopen("1.dic","r");
+
+while((line == fgetc(fp) != EOF){
+
+	if(line == '\n'){
+	line++;
+	}
+	
+	
+	}
+}
+
+//이하코드 생략
+
+return line;
+
+}
+
+```
+
+이제 단어갯수만큼 노드를 만들었고. 이를 개횡단위로 쪼개면서 입력받아서 노드에 넣어주면 될것같음.
+
+그런데 이작업을 하는중인데 여러 시도를 해보는중. 잘 안되는거같음. 
+
+반복문을 하나 만듬 (단어갯수만큼 반복되는)
+이때 fgets를 통해 하나하나 넣어주는방법으로 해보는 중. 첫 문자열은 영어 나머지는 쭉 한글뜻 그러다 개횡을 만나면 다시 다음 노드로넘어가면서 채워주는 방법.
+
+
+금일 공부간 참고한 사이트
+
+https://modoocode.com/38
+
+-fgets 내용
+
+https://blockdmask.tistory.com/382
+
+-strtok 내용
+
+https://dojang.io/mod/page/view.php?id=376
+
+-문자열 자르기
+
+http://blog.naver.com/PostView.nhn?blogId=tipsware&logNo=221326256836&redirect=Dlog&widgetTypeCall=true&directAccess=false
+-fgets심화내용
+
+https://blockdmask.tistory.com/381
+
+-strlen내용
+
+
+
+
+
+
+
 
 
