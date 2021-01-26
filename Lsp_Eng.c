@@ -187,7 +187,7 @@ str[strlen(str) - 1] = '\0';
 
 }
 
-
+// 여기서부터 다시 작업
 
 
 voca_count--;
