@@ -3,7 +3,12 @@
 #include <string.h>
 
 
-typedef struct Node {
+int play_num = 0;
+int file_num = 0;
+int play_mode = 0;
+
+
+typedef struct Node{
 
 	char eng[20];
 	char kor[3][20];
@@ -13,13 +18,76 @@ typedef struct Node {
 
 
 
+//노드를 몇개 만들어야 하나 size에서 고민을 한참했음. 그런데 단어가
+//개횡문자 갯수만큼 있으니까 파일에서 개횡을 세서 그만큼 노드를 만들어주면된다는생각을 함.
+// 파일 이름을 main에서 넘겨받으니까.. 이를 통해 내가 구해야하는 파일에 단어수를 구해주자
+// 근데 파일마다 조건문으로 어떤 파일인지 확인해야 하니 번거로운데, 이를 따로 만들어 관리해야 하나 고민중
+// 일단 파일이 3개라서 3개로 만들어봄.
+
+int voca(int dic_num){
+
+	int count = 0;
+	int line = 0;
+	FILE *fp;
+
+	fp = fopen("1.dic","r");
+
+	if (dic_num == 1){
+
+	fp = fopen("1.dic","r");
+
+	 while((line == fgetc(fp)) != EOF){
+          
+          if(line == '\n'){
+          
+             line++;
+  
+          }
+	}
+	
+	}
+
+	else if (dic_num == 2){
+
+	fp = fopen("2.dic","r");
+
+		while((line == fgetc(fp)) != EOF){
+          
+          if(line == '\n'){
+          
+              line++;
+  
+          }
+ 
+	}
+	
+	}
+	
+
+	else if (dic_num == 3){
+
+	fp = fopen("1.dic","r");
+
+	while((line == fgetc(fp)) != EOF){
+          
+    if(line == '\n'){
+          
+              line++;
+  
+          }
+  
+	}
+
+}
+
+	return line;
+
+}
+
    int main(void){
    
    	while(1){
 		
-      int play_num = 0;
-	  int file_num = 0;
-	  int play_mode = 0;
    
       printf(" >>영어 단어 암기 프로그램<< \n");
 	  blank();
@@ -91,32 +159,38 @@ void blank(){
 
 void First_Function(){
 
+int count = 0;
+
 blank();
 blank();
+
 printf(">> 영어단어 암기 프로그램 : 영어단어 맞추기 <<");
 
-char *buffer;
-int size;
-int count;
 
 FILE *fp = fopen("1.dic","r");
 
-fseek(fp,0,SEEK_END);
-
-size = ftell(fp);
-
-
-Node* node = (Node*)malloc(sizeof(Node));
-
-for(int i = 0; i < size; i++){
-
-fscanf(fp,"%s %s",&node.[i]
+int voca_cont = (file_num);
+int index = 0;
 
 
+node = (Node*)malloc(sizeof(Node) * voca_count);
+
+
+
+while(voca_count != 0){
+
+
+
+fgets(node[index].eng,strlen(str),*fp);
+
+str[strlen(str) - 1] = '\0';
 
 }
 
-fclose(fp);
+
+
+
+voca_count--;
 
 }
 
