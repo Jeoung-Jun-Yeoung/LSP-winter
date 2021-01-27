@@ -3,90 +3,25 @@
 #include <string.h>
 
 
-int play_num = 0;
-int file_num = 0;
-int play_mode = 0;
-
-
 typedef struct Node{
 
 	char eng[20];
-	char kor[3][20];
+	char kor[2][20];
 	struct Node* next;
 
 } Node;
 
 
+int file_num = 0;
 
-//노드를 몇개 만들어야 하나 size에서 고민을 한참했음. 그런데 단어가
-//개횡문자 갯수만큼 있으니까 파일에서 개횡을 세서 그만큼 노드를 만들어주면된다는생각을 함.
-// 파일 이름을 main에서 넘겨받으니까.. 이를 통해 내가 구해야하는 파일에 단어수를 구해주자
-// 근데 파일마다 조건문으로 어떤 파일인지 확인해야 하니 번거로운데, 이를 따로 만들어 관리해야 하나 고민중
-// 일단 파일이 3개라서 3개로 만들어봄.
-
-int voca(int dic_num){
-
-	int count = 0;
-	int line = 0;
-	FILE *fp;
-
-	fp = fopen("1.dic","r");
-
-	if (dic_num == 1){
-
-	fp = fopen("1.dic","r");
-
-	 while((line == fgetc(fp)) != EOF){
-          
-          if(line == '\n'){
-          
-             line++;
-  
-          }
-	}
-	
-	}
-
-	else if (dic_num == 2){
-
-	fp = fopen("2.dic","r");
-
-		while((line == fgetc(fp)) != EOF){
-          
-          if(line == '\n'){
-          
-              line++;
-  
-          }
- 
-	}
-	
-	}
-	
-
-	else if (dic_num == 3){
-
-	fp = fopen("1.dic","r");
-
-	while((line == fgetc(fp)) != EOF){
-          
-    if(line == '\n'){
-          
-              line++;
-  
-          }
-  
-	}
-
-}
-
-	return line;
-
-}
 
    int main(void){
    
-   	while(1){
+  int print_num = 0;
+  int play_mode = 0;
+
+	   
+	   while(1){
 		
    
       printf(" >>영어 단어 암기 프로그램<< \n");
@@ -103,15 +38,17 @@ int voca(int dic_num){
 
 
       printf("번호를 선택하세요 : \n");
-	  scanf ("%d", &play_num);
+	  scanf ("%d", &play_mode);
 
 	  printf("파일 번호를 선택하세요 : \n");
 	  scanf("%d", &file_num);
 	  
 	  printf("출력방식(알파벳 순서대로 :1, 무작위 :2)\n");
-	  scanf("%d", &file_num);
+	  scanf("%d", &print_num);
 
-	switch(play_num){
+
+
+	switch(play_mode){
 		
 		case 1 : 
 			
@@ -150,6 +87,8 @@ int voca(int dic_num){
   
   }
 
+
+
 void blank(){
 
 	printf("\n");
@@ -157,9 +96,11 @@ void blank(){
 }
 
 
+
 void First_Function(){
 
 int count = 0;
+
 
 blank();
 blank();
@@ -167,33 +108,151 @@ blank();
 printf(">> 영어단어 암기 프로그램 : 영어단어 맞추기 <<");
 
 
-FILE *fp = fopen("1.dic","r");
+blank();
+blank();
 
-int voca_cont = (file_num);
-int index = 0;
+// open file num -> file_num,  global value
+
+void word_count(){
+  
+      int count = 0;
+      FILE *fp;
+	  char cha;
+  
+
+	 printf("파일번호확인 %d \n", file_num);
+     
+  if (file_num == 1){
+
+	Node* word = (Node*)malloc(sizeof(Node)); 
+
+    fp = fopen("1.dic","rt");
+  
+	if(fp == NULL){
 
 
-node = (Node*)malloc(sizeof(Node) * voca_count);
+	printf("파일읽기에 실패했습니다.");
+	
+	return 0;
+	
+	}
 
 
+    while(feof(fp) == 0) {
 
-while(voca_count != 0){
+	fscanf(fp,"%c",word->eng);
+
+	
+	if (cha == ' '){
+	
+	
+	int kor_count = 0;
+
+	fscanf(fp,"%c",word->kor[kor_count]);
+	
+	kor_count++;
+	
+	}
 
 
+	printf("%s\n",word->eng);
+	
+	printf("%c",cha);
 
-fgets(node[index].eng,strlen(str),*fp);
+	
 
-str[strlen(str) - 1] = '\0';
+	if (cha == '\n'){ //다음 단어가 있으면 노드를 만들어서 연결.
+	
+		count++;
+		
+		Node* next_node = (Node*)malloc(sizeof(Node));
+
+		next_node->next = NULL;
+
+		word->next = next_node;
+
+	}
+
+	}
+
+	printf("단어갯수 %d \n", count);
+	fclose(fp);
+  }
+
+
+  else if(file_num == 2){
+
+	fp = fopen("2.dic","rt");
+ 
+     if(fp == NULL){
+ 
+     
+     printf("파일읽기에 실패했습니다.");
+     
+     return 0;
+     
+     }
+     
+     while(feof(fp) == 0) {
+ 
+     fscanf(fp,"%c",&cha);
+     printf("%c",cha);
+ 
+     if(cha == '\n'){
+     
+         count++;
+     
+     }
+     
+     }
+ 
+     printf("단어갯수 %d \n", count);
+ 
+	 fclose(fp);
+   }
+
+	else if(file_num == 3){
+
+	fp = fopen("3.dic","rt");
+ 
+     if(fp == NULL){
+      
+     printf("파일읽기에 실패했습니다.");
+     
+     return 0;
+     
+     }
+     
+     while(feof(fp) == 0) {
+ 
+     fscanf(fp,"%c",&cha);
+   
+	 printf("%c",cha);
+ 
+     if(cha == '\n'){
+     
+         count++;
+     
+     }
+     
+     }
+ 
+     printf("단어갯수 %d \n", count);
+ 	 
+	 fclose(fp);
+ 
+	}
 
 }
 
-// 여기서부터 다시 작업
+printf("word count 함수 실행전 \n");
 
+word_count();
 
-voca_count--;
+printf("word count 실행 됨 \n");
+
 
 }
-
 
 void Second_Function(){
 
