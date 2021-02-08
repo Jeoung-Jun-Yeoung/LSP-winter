@@ -158,20 +158,142 @@ void first(Word* array[],int count){
 }
 
 void second(Word* array[],int sec,int count){
-	printf(">> 영어 단어 암기 프로그램 : 플래쉬 카드  <<\n");
-	printf("\n");
-	printf("\n");
-	printf("\n");
-	
-	for(int i = 0; i < count; i++){
-		printf("      %s\n",array[i]->eng);
+	for(int i = 0; i<count; i++) {
+		printf(">> 영어 단어 암기 프로그램 : 플래쉬 카드 <<\n");
+		printf("\n");
+		printf("\n");
+		printf("\n");
+		printf("			%s\n",array[i]->eng);
 		sleep(sec);
-		printf("%s\n",array[i]->kor[0]);
+		system("clear");
+		printf(">> 영어 단어 암기 프로그램 : 플래쉬 카드 <<\n");
+		printf("\n");
+		printf("\n");
+		printf("\n");
+		printf("			%s %s %s\n",array[i]->kor[0],array[i]->kor[1],array[i]->kor[2]);
+		sleep(sec);
+		system("clear");
 	}
 }
 
 void third(Word* array[]){
-	printf("3");
+	int point = 1;
+	int index = strlen(array[0]->eng);
+	char input;
+	char rst[index + 1];
+
+	for(int i = 0; i < index; i++){
+		rst[i] = '_';
+	}
+
+	while(1){
+		if(point ==  1) {
+			printf(">> 영어 단어 암기 프로그램 : 행맨 <<\n");
+			printf("(힌트) %s %s %s\n",array[0]->kor[0],array[0]->kor[1],array[0]->kor[2]);
+			printf("\n");
+			printf("\n");
+			printf("-------------------+\n");
+			printf("\n");
+			printf("\n");
+			printf("\n");
+			printf("\n");
+			printf("\n");
+		}
+		else if(point == 2) {
+			printf(">> 영어 단어 암기 프로그램 : 행맨 <<\n");
+			printf("(힌트) %s %s %s\n",array[0]->kor[0],array[0]->kor[1],array[0]->kor[2]);
+			printf("\n");
+			printf("\n");
+			printf("-------------------+\n");
+			printf("                    O\n ");
+			printf("\n");
+			printf("\n");
+			printf("\n");
+			printf("\n");
+		}
+		else if(point == 3) {
+			printf(">> 영어 단어 암기 프로그램 : 행맨 <<\n");
+			printf("(힌트) %s %s %s\n",array[0]->kor[0],array[0]->kor[1],array[0]->kor[2]);
+			printf("\n");
+			printf("\n");
+			printf("-------------------+\n");
+			printf("                    O\n ");
+			printf("                  / ");
+			printf("\n");
+			printf("\n");
+			printf("\n");
+			printf("\n");
+		}
+		else if(point == 4) {
+			printf(">> 영어 단어 암기 프로그램 : 행맨 <<\n");
+			printf("(힌트) %s %s %s\n",array[0]->kor[0],array[0]->kor[1],array[0]->kor[2]);
+			printf("\n");
+			printf("\n");
+			printf("-------------------+\n");
+			printf("                    O\n ");
+			printf("                  / ");
+			printf("|");
+			printf("\n");
+			printf("\n");
+			printf("\n");
+			printf("\n");
+		}
+		else if(point == 5) {
+			printf(">> 영어 단어 암기 프로그램 : 행맨 <<\n");
+			printf("(힌트) %s %s %s\n",array[0]->kor[0],array[0]->kor[1],array[0]->kor[2]);
+			printf("\n");
+			printf("\n");
+			printf("-------------------+\n");
+			printf("                    O\n ");
+			printf("                  / ");
+			printf("|");
+			printf("W\n");
+			printf("\n");
+			printf("\n");
+			printf("\n");
+		}	
+		else{
+			printf(">> 영어 단어 암기 프로그램 : 행맨 <<\n");
+			printf("(힌트) %s %s %s\n",array[0]->kor[0],array[0]->kor[1],array[0]->kor[2]);
+			printf("\n");
+			printf("\n");
+			printf("-------------------+\n");
+			printf("                    O\n ");
+			printf("                  / ");
+			printf("|");
+			printf("W\n");
+			printf("                    /\n");
+			printf("\n");
+			printf("\n");
+		}
+		
+		for(int j = 0; j < index; j++){
+			printf("%c", rst[j]);
+		}
+		
+		printf("\n");	
+		printf("\n");	
+		printf("%d번째 시도 : ",point);
+
+		input = getchar();
+
+		for(int j = 0; j < index; j++){
+			if(array[0]->eng[j] == input){
+				rst[j] = array[0]->eng[j];
+				break;
+			}	
+		}
+		if(strcmp(array[0]->eng,rst) == 0){
+			printf("     #########################\n");
+			printf("     ### Congratulations!! ###\n");
+			printf("     #########################\n");
+			printf("\n");
+			printf("\n");
+			break; 
+		}
+		system("clear");
+		point++;
+	}
 }
 
 void fourth(){
