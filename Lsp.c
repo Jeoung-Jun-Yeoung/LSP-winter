@@ -166,8 +166,6 @@ void second(Word* array[],int sec,int count){
 		printf("			%s\n",array[i]->eng);
 		sleep(sec);
 		system("clear");
-		printf(">> 영어 단어 암기 프로그램 : 플래쉬 카드 <<\n");
-		printf("\n");
 		printf("\n");
 		printf("\n");
 		printf("			%s %s %s\n",array[i]->kor[0],array[i]->kor[1],array[i]->kor[2]);
@@ -177,17 +175,20 @@ void second(Word* array[],int sec,int count){
 }
 
 void third(Word* array[]){
-	int point = 1;
+	int error = 1;
 	int index = strlen(array[0]->eng);
+	int point = 1;
 	char input;
-	char rst[index + 1];
+	char rst[index+1];
+	char copy[index+1];
 
 	for(int i = 0; i < index; i++){
 		rst[i] = '_';
+		copy[i] = array[0]->eng[i];
 	}
 
 	while(1){
-		if(point ==  1) {
+		if(error == 1) {
 			printf(">> 영어 단어 암기 프로그램 : 행맨 <<\n");
 			printf("(힌트) %s %s %s\n",array[0]->kor[0],array[0]->kor[1],array[0]->kor[2]);
 			printf("\n");
@@ -199,7 +200,7 @@ void third(Word* array[]){
 			printf("\n");
 			printf("\n");
 		}
-		else if(point == 2) {
+		else if(error == 2) {
 			printf(">> 영어 단어 암기 프로그램 : 행맨 <<\n");
 			printf("(힌트) %s %s %s\n",array[0]->kor[0],array[0]->kor[1],array[0]->kor[2]);
 			printf("\n");
@@ -211,7 +212,7 @@ void third(Word* array[]){
 			printf("\n");
 			printf("\n");
 		}
-		else if(point == 3) {
+		else if(error == 3) {
 			printf(">> 영어 단어 암기 프로그램 : 행맨 <<\n");
 			printf("(힌트) %s %s %s\n",array[0]->kor[0],array[0]->kor[1],array[0]->kor[2]);
 			printf("\n");
@@ -224,7 +225,7 @@ void third(Word* array[]){
 			printf("\n");
 			printf("\n");
 		}
-		else if(point == 4) {
+		else if(error == 4) {
 			printf(">> 영어 단어 암기 프로그램 : 행맨 <<\n");
 			printf("(힌트) %s %s %s\n",array[0]->kor[0],array[0]->kor[1],array[0]->kor[2]);
 			printf("\n");
@@ -238,7 +239,7 @@ void third(Word* array[]){
 			printf("\n");
 			printf("\n");
 		}
-		else if(point == 5) {
+		else if(error == 5) {
 			printf(">> 영어 단어 암기 프로그램 : 행맨 <<\n");
 			printf("(힌트) %s %s %s\n",array[0]->kor[0],array[0]->kor[1],array[0]->kor[2]);
 			printf("\n");
@@ -251,8 +252,8 @@ void third(Word* array[]){
 			printf("\n");
 			printf("\n");
 			printf("\n");
-		}	
-		else{
+		}
+		else {
 			printf(">> 영어 단어 암기 프로그램 : 행맨 <<\n");
 			printf("(힌트) %s %s %s\n",array[0]->kor[0],array[0]->kor[1],array[0]->kor[2]);
 			printf("\n");
@@ -266,23 +267,30 @@ void third(Word* array[]){
 			printf("\n");
 			printf("\n");
 		}
-		
+
 		for(int j = 0; j < index; j++){
 			printf("%c", rst[j]);
 		}
-		
+
 		printf("\n");	
 		printf("\n");	
 		printf("%d번째 시도 : ",point);
 
 		input = getchar();
-
-		for(int j = 0; j < index; j++){
-			if(array[0]->eng[j] == input){
-				rst[j] = array[0]->eng[j];
+		getchar();
+		
+		for(int j = 0; j < index; j++){	
+			if(copy[j] == input){
+				rst[j] = input;
+				copy[j] = '*';
 				break;
-			}	
+			}
+			else if(j == index-1){
+				error++;
+				break;
+			}
 		}
+
 		if(strcmp(array[0]->eng,rst) == 0){
 			printf("     #########################\n");
 			printf("     ### Congratulations!! ###\n");
@@ -291,8 +299,8 @@ void third(Word* array[]){
 			printf("\n");
 			break; 
 		}
-		system("clear");
-		point++;
+	system("clear");
+	point++;
 	}
 }
 
@@ -429,6 +437,7 @@ int main(){
 		printf("\n");
 		printf("번호를 선택 하세요 : ");
 		scanf("%d",&mode);
+		getchar();
 		printf("\n");
 
 		if(mode == 2){
