@@ -116,35 +116,45 @@ void first(Word* array[],int count){
 	printf(">> 영어 단어 암기 프로그램 : 영어 단어 맞추기 <<\n");
 	printf("\n");
 
-	char input [16];
+	char input[16];
 	char stop [6] =".quit"; //입력받은거랑 비교해서 종료해줌
+	char enter;
 	double score = 0; // 몇개 맞췄는지
 	double play = 0; // 몇개 단어가 나왔는지	
 
 	for(int i = 0; i < count; i++){
 		printf("%s -> ",array[i]->kor[0]);
-		scanf("%s",input);
+		fgets(input,sizeof(input),stdin);
+		input[strlen(input)-1] = '\0';
+
 		if (strcmp(input,stop) == 0) { //종료조건입력시 종료
 			break;
 		}
 		else if(strcmp(input,array[i]->eng) == 0){ // 맞춤
 			score++;
 			printf("\n");
-			printf("correct!\n");	
+			printf("correct!\n");
 			printf("\n");
 		}
 		else{ // 못맞춤
 			printf("\n");
-			printf("incorrect!\n");	
+			printf("incorrect!");	
 			printf("\n");
 		}
 		play++;
 	}
-//	if(score == 0 && 
-	score = (score / play) * 100; // 점수합산
-	printf("당신의 점수는 %0.2f 점 입니다.",score); // 두자릿수까지
-	char enter;
-	scanf(" %c",&enter);
+	if(score == 0 && play == 0){ // 0/0일때 nan처리 
+		printf("당신의 점수는 0.00 점 입니다.\n"); // 두자릿수까지
+		enter = getchar();
+		system("clear");
+	}
+	else{
+		score = (score / play) * 100; // 점수합산
+		printf("당신의 점수는 %0.2f 점 입니다.\n",score);  
+		enter = getchar();
+		system("clear");
+	}
+
 }
 
 void second(Word* array[]){
@@ -293,10 +303,12 @@ int main(){
 		if(mode == 2){
 			printf("속도 (초) : ");
 			scanf("%d",&sec);
+			getchar();
 		}
 
 		printf("파일명(일차) : ");
 		scanf("%s",number);
+		getchar();
 		printf("\n");
 
 		strcat(number,dic); //입력받은 숫자를 open하는데 필요한 양식으로 만듬.
@@ -311,6 +323,7 @@ int main(){
 		printf("출력방식(알파벳순서대로 : 1 , 무작위 : 2) : ");
 
 		scanf("%d",&sorting_option);
+		getchar();
 
 		makeList(head,count,number); // 단어리스트를 만듬
 
