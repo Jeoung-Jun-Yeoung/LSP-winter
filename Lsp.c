@@ -157,9 +157,19 @@ void first(Word* array[],int count){
 
 }
 
-void second(Word* array[]){
-	printf("2");
+void second(Word* array[],int sec,int count){
+	printf(">> 영어 단어 암기 프로그램 : 플래쉬 카드  <<\n");
+	printf("\n");
+	printf("\n");
+	printf("\n");
+	
+	for(int i = 0; i < count; i++){
+		printf("      %s\n",array[i]->eng);
+		sleep(sec);
+		printf("%s\n",array[i]->kor[0]);
+	}
 }
+
 void third(Word* array[]){
 	printf("3");
 }
@@ -167,7 +177,6 @@ void third(Word* array[]){
 void fourth(){
 
 	while(1) {
-
 		char newdic[5] = ".dic";
 		int control = 0;
 		printf(">> 영어 단어 암기 프로그램 : 단어장 관리 <<");
@@ -304,6 +313,7 @@ int main(){
 			printf("속도 (초) : ");
 			scanf("%d",&sec);
 			getchar();
+			printf("\n");
 		}
 
 		printf("파일명(일차) : ");
@@ -338,7 +348,7 @@ int main(){
 				break;
 			case 2 :
 				system("clear");
-				second(array);
+				second(array,sec,count);
 				break;
 			case 3 :
 				system("clear");
