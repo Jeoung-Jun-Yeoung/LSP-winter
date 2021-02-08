@@ -112,51 +112,40 @@ void sorting(Word* head,Word* array[],int count,int sorting_option) {
 	}
 }
 
-int first(Word* array[],int count){
+void first(Word* array[],int count){
 	printf(">> 영어 단어 암기 프로그램 : 영어 단어 맞추기 <<\n");
+	printf("\n");
 
 	char input [16];
 	char stop [6] =".quit"; //입력받은거랑 비교해서 종료해줌
-	float score = 0; // 몇개 맞췄는지
-	float play = 0; // 몇개 단어가 나왔는지
-	int num = 1;
+	double score = 0; // 몇개 맞췄는지
+	double play = 0; // 몇개 단어가 나왔는지	
 
-	fgets(input,sizeof(input),stdin);
-	printf("%s",input);
-	while(num != 1){
-
-		for(int i = 0; i < count; i++){
-			printf("%s -> ",array[i]->kor[0]);
-			fgets(input,sizeof(input),stdin);
-
-			if (strcmp(input,stop) == 0) {
-				num = 2;
-				break;
-			}
-			else if(strcmp(input,array[i]->eng) == 0){
-				printf("\n");
-				printf("correct!\n");
-			}
-			else{
-				printf("incorrect!\n");
-			}
-				play++;
+	for(int i = 0; i < count; i++){
+		printf("%s -> ",array[i]->kor[0]);
+		scanf("%s",input);
+		if (strcmp(input,stop) == 0) { //종료조건입력시 종료
+			break;
 		}
+		else if(strcmp(input,array[i]->eng) == 0){ // 맞춤
+			score++;
+			printf("\n");
+			printf("correct!\n");	
+			printf("\n");
+		}
+		else{ // 못맞춤
+			printf("\n");
+			printf("incorrect!\n");	
+			printf("\n");
+		}
+		play++;
 	}
-
-//printf("당신의 점수는 %f 점 입니다.", (play));
-
+//	if(score == 0 && 
+	score = (score / play) * 100; // 점수합산
+	printf("당신의 점수는 %0.2f 점 입니다.",score); // 두자릿수까지
+	char enter;
+	scanf(" %c",&enter);
 }
-
-
-/*
-   for(int i = 0; i < 16; i++){
-   if(inputp[i] != '\n' && i == 15){
-   printf("입력가능범위를 초과했습니다.");
-   break;
-   }
-   }*/	
-
 
 void second(Word* array[]){
 	printf("2");
