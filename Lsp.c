@@ -12,22 +12,48 @@ typedef struct Word {
 	struct Word* next;
 } Word;
 
-char search_file(char number[]) {
+typedef struct file {
+	char name[10];
+} file;
 
+int search_dir() {
 	DIR* dp = NULL;
 	struct	dirent* entry = NULL;
-	char t = 't';
+	int filecount = 0;
 
 	if ((dp = opendir(".")) == NULL) {
 		printf("디렉토리를 열수 없습니다.\n");
 	}
 	while ((entry = readdir(dp)) != NULL) {
-		if (strcmp(number,entry->d_name) == 0) {
-			return t;
-		}	
+		char* ptr = strstr(entry->d_name,".dic");	
+		if (ptr != NULL){
+			filecount++;
+		}
+	}
+	closedir(dp);
+	return filecount;
+}
+
+void filelist(file* list[]) {
+	DIR* dp = NULL;
+	struct dirent* entry = NULL;
+	int index = 0;
+
+	if ((dp = opendir(".")) == NULL) {
+		printf("디렉토리를 열수 없습니다.");
+	}
+
+	while ((entry = readdir(dp)) != NULL) {
+		char* ptr = strstr(entry->d_name,".dic");
+
+		if (ptr != NULL) {
+			strcpy(list[index]->name,entry->d_name);
+			index++;
+		}
 	}
 	closedir(dp);
 }
+
 
 int count_word(char* number) {
 	FILE* fp;
@@ -78,7 +104,7 @@ void makeList(Word* head,int count,char* number) {
 
 void sorting(Word* head,Word* array[],int count,int sorting_option) {
 	Word* curr = (Word*)malloc(sizeof(Word));
-	curr= head;
+	curr = head;
 	Word* temp;
 
 	for (int i = 0; i < count; i++) {
@@ -301,8 +327,6 @@ void third(Word* array[]) {
 void fourth(){
 
 	while(1) {
-		char newdic[5] = ".dic";
-		int control = 0;
 		printf(">> 영어 단어 암기 프로그램 : 단어장 관리 <<");
 		printf("\n");
 		printf("1. 새파일 추가하기		2. 새 단어 추가하기\n");	
@@ -311,7 +335,34 @@ void fourth(){
 		printf("\n");	
 		printf("\n");	
 		printf("번호를 입력하세요 : ");
+
+		int control = 0;
+		char newdic[5] = ".dic";		
+		int filecount = 0;
+
+		filecount = search_dir();
+		file* list [filecount];
+		file* temp;	
+
+		for (int i = 0; i < filecount; i++) {
+			file* node = (file*)malloc(sizeof(file));
+			list[i] = node;
+		}
+
+		filelist(list);
+
+		for (int i = 0; i < filecount-1; i++) {
+			for (int j = 0; j < filecount-i-1; j++) {
+				if (strcmp(list[j]->name,list[j+1]->name) > 0 ) {
+					temp = list[j];
+					list[j] = list[j+1];
+					list[j+1] = temp;
+				}
+			}
+		}
+
 		scanf("%d",&control);
+		getchar();
 
 		switch (control){
 			case 1 :
@@ -319,24 +370,38 @@ void fourth(){
 				printf(">> 영어 단어 암기 프로그램 : 단어장 관리 : 새파일 추가하기 <<\n");
 				printf("\n");
 
-				char* newnumber = malloc(sizeof(char)*20);
 				FILE* newfile;
+				char number[7];
+				char stop[5] = ".add";
 
-				printf("추가할 파일번호를 입력하세요 : ");
-				scanf("%s",newnumber);
-				strcat(newnumber,newdic);
-				newfile = fopen(newnumber,"w");
+				sprintf(number,"%d",filecount+1);
+				strcat(number,".dic");
+				newfile = fopen(number,"w");
 
 				if(newfile == NULL){
 					printf("파일을 추가하는데 실패했습니다.");
 					printf("\n");
 				}
-				else{
-					printf("파일을 추가했습니다");
-					printf("\n");
+
+				while(1){
+					char input [110];
+
+					fgets(input,sizeof(input),stdin);
+					input[strlen(input)-1] = '\0';
+
+					if (strcmp(input,stop) == 0) { //종료조건입력시 종료
+						fclose(newfile);
+						break;
+					}	
+					else{
+						fputs(input,newfile);
+						fputs("\n",newfile);
+					}
 				}
-				fclose(newfile);
+				system("clear");
+
 				break;
+
 			case 2 :
 				system("clear");
 				printf(">> 영어 단어 암기 프로그램 : 단어장 관리 : 새단어 추가하기 <<");
@@ -344,28 +409,38 @@ void fourth(){
 				printf("단어를 추가할 파일을 입력해주세요 ex) 1.dic");
 				printf("\n");
 
-				char* filename = malloc(sizeof(char)*20);
-				char writeword[81];
+				char filename [7];
 				char end[5] = ".add";
-				int count = 20;
-				FILE* wordfp;
+				FILE* fp;
 
-				scanf("%s",filename);
+				fgets(filename,sizeof(filename),stdin);
+				filename[strlen(filename)-1] = '\0';
+				fp = fopen(filename,"a");
+				
+				system("clear");
+				printf(">> 영어 단어 암기 프로그램 : 단어장 관리 : 새단어 추가하기 <<");
+				printf("\n");
+				printf("단어를 추가할 파일을 입력해주세요 ex) 1.dic");
+				printf("\n");
 
-				wordfp = fopen(filename,"a");
-				//fget으로 입력을 받아야개행입력받기
-				while(count != 0){
-					scanf("%s",writeword);
-					// 
-					if(strcmp(end,writeword) == 0){
-						count = 0;
+				while (1) {
+					char input [110];
+
+					fgets(input,sizeof(input),stdin);
+					input[strlen(input)-1] = '\0';
+
+					if (strcmp(input,end) == 0) {
+						fclose(fp);
+						system("clear");
 						break;
 					}
-					fputs(writeword,wordfp);
-					count--;
+					else{
+						fputs(input,fp);
+						fputs("\n",fp);
+					}
 				}
-				fclose(wordfp);
 				break;
+
 			case 3 :
 				system("clear");
 				printf(">> 영어 단어 암기 프로그램 : 단어장 관리 : 단어장 보기 <<");
@@ -381,14 +456,14 @@ void fourth(){
 				strcat(readnumber,newdic);
 				fps = fopen(readnumber,"r");
 
-				if(fps == NULL){
+				if (fps == NULL) {
 					printf("파일을 여는데 실패했습니다\n");
 					break;
 				}
 
 				printf("---- 단어장 -------------\n");
 
-				while(!feof(fps)){
+				while (!feof(fps)) {
 					fscanf(fps,"%c",&ch);
 					printf("%c",ch);
 				}
@@ -396,9 +471,26 @@ void fourth(){
 				fclose(fps);
 				break;
 			case 4:
-				//문자열 뒤부터 비교?
-				//strstr함수 자릿수비교 .dic파일이랑 맞으면 리턴값이 맞으면 출력.
-				system("clear");
+				printf("\n");
+				printf("\n");
+				printf("\n");
+				printf("-------------단어 파일 목록-----------\n");
+				
+				int flag = 0;
+
+				for (int i = 0; i < filecount; i++) {
+					if (flag == 5) {
+						printf("\n");
+						flag = 0;
+					}
+					printf("      %s ",list[i]->name);
+					flag++;
+					if (i == filecount - 1) {
+						printf("\n");
+						printf("\n");
+						printf("\n");
+					}
+				}
 				break;
 			case 5:
 
@@ -407,7 +499,7 @@ void fourth(){
 	}
 }
 
-int main(){
+int main() {
 
 	char dic[10] = ".dic"; //file양식
 	char* number = malloc(sizeof(char)*20); // uesr로부터 입력받은 파일 번호 문자열로
@@ -416,6 +508,7 @@ int main(){
 	int sorting_option = 0; // 출력방식변수
 	int count = 0; // Count_word(단어갯수를 세는 함수)의 결과를  담을 변수
 
+	int temp = 0;
 	Word* head = (Word*)malloc(sizeof(Word)); //main에서 단어연결리스트의 head를 선언. 
 	head->next = NULL; // head의 초기화
 
@@ -429,41 +522,42 @@ int main(){
 		printf("5. 프로그램 종료\n");
 		printf("\n");
 		printf("번호를 선택 하세요 : ");
+		
+		
 		scanf("%d",&mode);
 		getchar();
 		printf("\n");
 
-		if(mode == 2){
+		if (mode == 2) {
 			printf("속도 (초) : ");
 			scanf("%d",&sec);
 			getchar();
 			printf("\n");
 		}
+		if (mode == 4) {
+			system("clear");
+			fourth();
+		}
 
 		printf("파일명(일차) : ");
 		scanf("%s",number);
 		getchar();
+		
 		printf("\n");
-
-		strcat(number,dic); //입력받은 숫자를 open하는데 필요한 양식으로 만듬.
-
-		if(search_file(number) != 't'){
-			printf("파일명이 존재하지 않습니다.");
-			break;
-		} // 디렉토리를 탐색해서 파일이 존재하는지 확인.
-
-		count = count_word(number);//파일이 존재한다면, 파일을 열어 단어갯수를 센다. 그리고 결과 저장.
-
 		printf("출력방식(알파벳순서대로 : 1 , 무작위 : 2) : ");
 
 		scanf("%d",&sorting_option);
-		getchar();
+		getchar();	
+
+		strcat(number,dic); //입력받은 숫자를 open하는데 필요한 양식으로 만듬.
+
+		count = count_word(number);//파일이 존재한다면, 파일을 열어 단어갯수를 센다. 그리고 결과 저장.
 
 		makeList(head,count,number); // 단어리스트를 만듬
 
 		Word* array[count];
 
-		sorting(head,array,count,sorting_option); // Word구조체 배열에 정렬 혹은 랜덤으로 단어가 정리되서 튀어나옴. 이제 이걸 각 기능별로 보내서 구현
+		sorting(head,array,count,sorting_option); // Word구조체 배열에 정렬 혹은 랜덤으로 단어가 정리되서 튀어나옴. 이제 이걸 각 기능별로 보내서 구현	
 
 		switch(mode){
 			case 1 :
@@ -478,10 +572,10 @@ int main(){
 				system("clear");
 				third(array);
 				break;
-			case 4 :
+		/*	case 4 :
 				system("clear");
 				fourth();
-				break;
+				break;*/
 			case 5 :
 				return 0;
 			default :
