@@ -378,12 +378,12 @@ void fourth(){
 				strcat(number,".dic");
 				newfile = fopen(number,"w");
 
-				if(newfile == NULL){
+				if (newfile == NULL) {
 					printf("파일을 추가하는데 실패했습니다.");
 					printf("\n");
 				}
 
-				while(1){
+				while (1) {
 					char input [110];
 
 					fgets(input,sizeof(input),stdin);
@@ -451,9 +451,11 @@ void fourth(){
 				char ch;
 				FILE* fps;	
 				char* readnumber = malloc(sizeof(char)*20);
+				
 				scanf("%s",readnumber);	
-
+				getchar();
 				strcat(readnumber,newdic);
+				
 				fps = fopen(readnumber,"r");
 
 				if (fps == NULL) {
@@ -508,7 +510,6 @@ int main() {
 	int sorting_option = 0; // 출력방식변수
 	int count = 0; // Count_word(단어갯수를 세는 함수)의 결과를  담을 변수
 
-	int temp = 0;
 	Word* head = (Word*)malloc(sizeof(Word)); //main에서 단어연결리스트의 head를 선언. 
 	head->next = NULL; // head의 초기화
 
@@ -559,7 +560,7 @@ int main() {
 
 		sorting(head,array,count,sorting_option); // Word구조체 배열에 정렬 혹은 랜덤으로 단어가 정리되서 튀어나옴. 이제 이걸 각 기능별로 보내서 구현	
 
-		switch(mode){
+		switch (mode){
 			case 1 :
 				system("clear");
 				first(array,count);
@@ -572,10 +573,6 @@ int main() {
 				system("clear");
 				third(array);
 				break;
-		/*	case 4 :
-				system("clear");
-				fourth();
-				break;*/
 			case 5 :
 				return 0;
 			default :
