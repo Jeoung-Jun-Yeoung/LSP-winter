@@ -424,7 +424,7 @@ void fourth(){
 				system("clear");
 				printf(">> 영어 단어 암기 프로그램 : 단어장 관리 : 새단어 추가하기 <<");
 				printf("\n");
-				printf("단어를 추가할 파일을 입력해주세요 ex) 1.dic");
+				printf("단어를 추가할 파일을 입력해주세요");
 				printf("\n");
 
 				while (1) {
