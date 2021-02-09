@@ -161,7 +161,7 @@ void first(Word* array[],int count) {
 		}
 		else { // 못맞춤
 			printf("\n");
-			printf("incorrect!");	
+			printf("incorrect!\n");	
 			printf("\n");
 		}
 		play++;
@@ -185,6 +185,8 @@ void second(Word* array[],int sec,int count) {
 		printf("			%s\n",array[i]->eng); // 영어출력
 		sleep(sec);//입력받은만큼쉬기
 		system("clear");
+		printf(">> 영어 단어 암기 프로그램 : 플래쉬 카드 <<\n");
+		printf("\n");
 		printf("\n");
 		printf("\n");
 		printf("			%s %s %s\n",array[i]->kor[0],array[i]->kor[1],array[i]->kor[2]); // 반복문사용을 해도됨
@@ -199,12 +201,14 @@ void third(Word* array[]) {
 	int index = strlen(array[0]->eng);
 	int try = 1; // 도전횟수
 	char input;
-	char rst[index+1]; // 보여줄결과창
-	char copy[index+1]; // 영어만 copy해서 사용.
+	char* rst = (char*)malloc(sizeof(char)*index); // 보여줄결과창
+	char copy[index]; // 영어만 copy해서 사용.
 
 	for (int i = 0; i < index; i++) {
-		rst[i] = '_'; //초기 세팅
 		copy[i] = array[0]->eng[i]; // 영어 복사
+	}
+	for (int i = 0; i < index; i++){
+		rst[i] = '_';
 	}
 
 	while(1) {
@@ -306,11 +310,10 @@ void third(Word* array[]) {
 				break; 
 			}
 
-			if (j == index-1) { // 입력문자가 문자열에 없으면
+			else if (j == index-1) { // 입력문자가 문자열에 없으면
 				error++; // 틀렸음.
 			}
 		}
-
 		if (strcmp(array[0]->eng,rst) == 0) {// 원본이랑 비교.
 			printf("     #########################\n");
 			printf("     ### Congratulations!! ###\n");
@@ -322,6 +325,7 @@ void third(Word* array[]) {
 		system("clear");
 		try++; // 한번에 입력에 대한 작동완료. 카운트해줌.
 	}
+free(rst);
 }
 
 void fourth(){
@@ -416,7 +420,7 @@ void fourth(){
 				fgets(filename,sizeof(filename),stdin);
 				filename[strlen(filename)-1] = '\0';
 				fp = fopen(filename,"a");
-				
+
 				system("clear");
 				printf(">> 영어 단어 암기 프로그램 : 단어장 관리 : 새단어 추가하기 <<");
 				printf("\n");
@@ -451,11 +455,11 @@ void fourth(){
 				char ch;
 				FILE* fps;	
 				char* readnumber = malloc(sizeof(char)*20);
-				
+
 				scanf("%s",readnumber);	
 				getchar();
 				strcat(readnumber,newdic);
-				
+
 				fps = fopen(readnumber,"r");
 
 				if (fps == NULL) {
@@ -477,7 +481,7 @@ void fourth(){
 				printf("\n");
 				printf("\n");
 				printf("-------------단어 파일 목록-----------\n");
-				
+
 				int flag = 0;
 
 				for (int i = 0; i < filecount; i++) {
@@ -518,13 +522,13 @@ int main() {
 		printf("\n");
 		printf("1. 영어 단어 맞추기	2. 플래쉬 카드\n");
 		printf("\n");
-		printf("3. 행맨(hangman)       4. 단어장 관리\n");
+		printf("3. 행맨(hangman)        4. 단어장 관리\n");
 		printf("\n");
 		printf("5. 프로그램 종료\n");
 		printf("\n");
 		printf("번호를 선택 하세요 : ");
-		
-		
+
+
 		scanf("%d",&mode);
 		getchar();
 		printf("\n");
@@ -543,7 +547,7 @@ int main() {
 		printf("파일명(일차) : ");
 		scanf("%s",number);
 		getchar();
-		
+
 		printf("\n");
 		printf("출력방식(알파벳순서대로 : 1 , 무작위 : 2) : ");
 
