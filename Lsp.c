@@ -105,7 +105,7 @@ void sorting(Word* head,Word* array[],int count,int sorting_option) {
 		for(int i = 0; i < count; i++){
 			int numseed1 = rand() % count; // 30까지의 난수를 만들어줌
 			int numseed2 = rand() % count; // 30까지의 난수를 만들어줌
-			temp = array[numseed1];
+			temp = array[numseed1]; //랜덤인덱스로 섞어줌
 			array[numseed1] = array[numseed2];
 			array[numseed2] = temp;
 		}
@@ -163,38 +163,51 @@ void second(Word* array[],int sec,int count){
 		printf("\n");
 		printf("\n");
 		printf("\n");
-		printf("			%s\n",array[i]->eng);
-		sleep(sec);
+		printf("			%s\n",array[i]->eng); // 영어출력
+		sleep(sec);//입력받은만큼쉬기
 		system("clear");
 		printf("\n");
 		printf("\n");
 		printf("			%s %s %s\n",array[i]->kor[0],array[i]->kor[1],array[i]->kor[2]);
+		//한글출력
 		sleep(sec);
 		system("clear");
 	}
 }
 
 void third(Word* array[]){
-	int error = 1;
+	int error = 0; //틀린횟수로 행맨보여주기
 	int index = strlen(array[0]->eng);
-	int point = 1;
+	int point = 1; // 도전횟수
 	char input;
-	char rst[index+1];
-	char copy[index+1];
+	char rst[index+1]; // 보여줄결과창
+	char copy[index+1]; // 영어만 copy해서 사용.
 
 	for(int i = 0; i < index; i++){
-		rst[i] = '_';
-		copy[i] = array[0]->eng[i];
+		rst[i] = '_'; //초기 세팅
+		copy[i] = array[0]->eng[i]; // 영어 복사
 	}
 
 	while(1){
-		if(error == 1) {
+		if(error == 0) { // 처음
 			printf(">> 영어 단어 암기 프로그램 : 행맨 <<\n");
 			printf("(힌트) %s %s %s\n",array[0]->kor[0],array[0]->kor[1],array[0]->kor[2]);
 			printf("\n");
 			printf("\n");
 			printf("-------------------+\n");
 			printf("\n");
+			printf("\n");
+			printf("\n");
+			printf("\n");
+			printf("\n");
+		}
+		else if(error == 1) { 
+			printf(">> 영어 단어 암기 프로그램 : 행맨 <<\n");
+			printf("(힌트) %s %s %s\n",array[0]->kor[0],array[0]->kor[1],array[0]->kor[2]);
+			printf("\n");
+			printf("\n");
+			printf("-------------------+\n");
+			printf("                    O\n ");
 			printf("\n");
 			printf("\n");
 			printf("\n");
@@ -207,6 +220,7 @@ void third(Word* array[]){
 			printf("\n");
 			printf("-------------------+\n");
 			printf("                    O\n ");
+			printf("                  / ");
 			printf("\n");
 			printf("\n");
 			printf("\n");
@@ -220,26 +234,13 @@ void third(Word* array[]){
 			printf("-------------------+\n");
 			printf("                    O\n ");
 			printf("                  / ");
-			printf("\n");
-			printf("\n");
-			printf("\n");
-			printf("\n");
-		}
-		else if(error == 4) {
-			printf(">> 영어 단어 암기 프로그램 : 행맨 <<\n");
-			printf("(힌트) %s %s %s\n",array[0]->kor[0],array[0]->kor[1],array[0]->kor[2]);
-			printf("\n");
-			printf("\n");
-			printf("-------------------+\n");
-			printf("                    O\n ");
-			printf("                  / ");
 			printf("|");
 			printf("\n");
 			printf("\n");
 			printf("\n");
 			printf("\n");
 		}
-		else if(error == 5) {
+		else if(error == 4) {
 			printf(">> 영어 단어 암기 프로그램 : 행맨 <<\n");
 			printf("(힌트) %s %s %s\n",array[0]->kor[0],array[0]->kor[1],array[0]->kor[2]);
 			printf("\n");
@@ -269,29 +270,29 @@ void third(Word* array[]){
 		}
 
 		for(int j = 0; j < index; j++){
-			printf("%c", rst[j]);
+			printf("%c", rst[j]); // 결과보여주기
 		}
 
 		printf("\n");	
 		printf("\n");	
-		printf("%d번째 시도 : ",point);
+		printf("%d번째 시도 : ",point); // 몇번째 입력했는지
 
-		input = getchar();
+		input = getchar(); // 한문자 입력받기
 		getchar();
 		
 		for(int j = 0; j < index; j++){	
-			if(copy[j] == input){
-				rst[j] = input;
-				copy[j] = '*';
-				break;
+			if(copy[j] == input){ // 영어에 있으면
+				rst[j] = input; // 출력에 넣어주고
+				copy[j] = '*'; // 이미 비교한거는 방문표시
+				break; 
 			}
-			else if(j == index-1){
-				error++;
+			else if(j == index-1){ // 입력문자가 문자열에 없으면
+				error++; // 틀렸음.
 				break;
 			}
 		}
 
-		if(strcmp(array[0]->eng,rst) == 0){
+		if(strcmp(array[0]->eng,rst) == 0){// 원본이랑 비교.
 			printf("     #########################\n");
 			printf("     ### Congratulations!! ###\n");
 			printf("     #########################\n");
@@ -300,7 +301,7 @@ void third(Word* array[]){
 			break; 
 		}
 	system("clear");
-	point++;
+	point++; // 한번에 입력에 대한 작동완료. 카운트해줌.
 	}
 }
 
