@@ -325,7 +325,7 @@ void third(Word* array[]) {
 		system("clear");
 		try++; // 한번에 입력에 대한 작동완료. 카운트해줌.
 	}
-free(rst);
+	free(rst);
 }
 
 void fourth(){
@@ -424,7 +424,6 @@ void fourth(){
 				system("clear");
 				printf(">> 영어 단어 암기 프로그램 : 단어장 관리 : 새단어 추가하기 <<");
 				printf("\n");
-				printf("단어를 추가할 파일을 입력해주세요");
 				printf("\n");
 
 				while (1) {
@@ -491,12 +490,10 @@ void fourth(){
 					}
 					printf("      %s ",list[i]->name);
 					flag++;
-					if (i == filecount - 1) {
-						printf("\n");
-						printf("\n");
-						printf("\n");
-					}
 				}
+				printf("\n");
+				printf("\n");
+				printf("\n");
 				break;
 			case 5:
 
